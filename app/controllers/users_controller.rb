@@ -63,7 +63,7 @@ class UsersController < ApplicationController
 
     unless token == "Bearer #{expected_token}"
       # curl -X POST -H "Authorization: Bearer XXXX-XX-XX" http://localhost:3000/users(本日日付でない場合)
-      render json: { message: "トークンが違うよ" }, status: :unauthorized
+      render json: { message: "トークン日付が違うよ" }, status: :unauthorized
       return
     end
   end
