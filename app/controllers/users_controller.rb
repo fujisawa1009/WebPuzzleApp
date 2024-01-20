@@ -23,15 +23,13 @@ class UsersController < ApplicationController
 
   def show
     # 特定のユーザーを取得する処理
-    if params[:id] == "5cc12803-2d8b-4ea6-9978-f91ce5fbd1ec"
-      @user = User.find_by(id: 1)
-    end
+    @user = User.find_by(uuid: params[:id])
 
     if @user
-      # ユーザーが見つかった場合の処理
+      # UUIDのユーザーが存在する場合の処理
       render 'users/show' # app/views/users/show.html.erb を表示
     else
-      # ユーザーが見つからなかった場合の処理
+      # UUIDのユーザーが存在しない場合の処理
       render plain: 'User not found', status: :not_found
     end
   end
