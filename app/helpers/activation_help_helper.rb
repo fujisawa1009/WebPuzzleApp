@@ -1,0 +1,2 @@
+module ActivationHelpHelper
+end

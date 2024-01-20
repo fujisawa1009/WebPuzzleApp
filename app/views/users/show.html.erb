@@ -1,0 +1,17 @@
+<!-- Secret keyword を入力してフォームを送信すると、UsersController の authenticate アクションが呼ぶ -->
+<form action="/users/authenticate" method="post">
+  <!-- 現在のユーザー名を表示する -->
+  <div class="mb-3">
+    <label for="user_name">Name</label>
+    <span id="user_name_display"><%= @user.name %></span>
+  </div>
+
+  <!-- Secret keyword 入力フォーム -->
+  <div class="mb-3">
+    <label for="user_secret_keyword">Secret Keyword</label>
+    <input class="form-control" placeholder="ヒント:ユーザーのUUID" type="text" name="user[secret_keyword]" id="user_secret_keyword"/>
+  </div>
+
+  <!-- 本登録ボタン -->
+  <input type="submit" name="commit" value="本登録" class="btn btn-primary" data-disable-with="本登録"/>
+</form>
