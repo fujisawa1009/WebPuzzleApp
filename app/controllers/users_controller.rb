@@ -10,7 +10,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       # curl -X POST -H "Authorization: Bearer XXXX-XX-XX" -d "name=fujisawa" http://localhost:3000/users
-      render json: { message: 'ユーザーの仮登録が完了しました。本登録をするためにブラウザで http://localhost:3000/users/5cc12803-2d8b-4ea6-9978-f91ce5fbd1ec にアクセスしてください。何か困ったら http://localhost:3000/users/activation_help にアクセスしてください。' }
+      render json: { message: "ユーザーの仮登録が完了しました。本登録をするためにブラウザで http://localhost:3000/users/#{@user.uuid} にアクセスしてください。何か困ったら http://localhost:3000/users/activation_help にアクセスしてください。"
+      }
     else
       # Nameが空の場合 {"message":"Name can't be blank"}
       render json: { message: @user.errors.full_messages.join(', ') }, status: :unprocessable_entity
