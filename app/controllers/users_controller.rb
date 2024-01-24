@@ -34,17 +34,21 @@ class UsersController < ApplicationController
     end
   end
 
-  def authenticate #まだ未確認のメソッド
-    # フォームから送信されたデータを取得
-    submitted_secret_keyword = params[:user][:secret_keyword]
+  def authenticate
+    # 特定のユーザーを取得する処理
+    @user = User.find_by(uuid: params[:id])
+    user_uuid = @user.uuid
+    secret_keyword = params[:secret_keyword]
+    base64_secret_keyword = Base64.strict_encode64(@user.uuid)
 
-    # ユーザーのUUIDと一致するかチェック
-    if @user && @user.uuid == submitted_secret_keyword
-      # 認証成功時の処理
-      redirect_to authenticated_path, notice: '認証に成功しました。'
+    # 2423feae-66cb-4dde-a090-8e8062123e38 で送れば惜しい
+    # MjQyM2ZlYWUtNjZjYi00ZGRlLWEwOTAtOGU4MDYyMTIzZTM4 で送付すれば成功
+    if @user && secret_keyword == base64_secret_keyword
+      puts "成功です"
+    elsif @user && secret_keyword == user_uuid
+      puts "パスワードをBase64エンコードしてください"
     else
-      # 認証失敗時の処理
-      redirect_to unauthenticated_path, alert: '認証に失敗しました。'
+      puts "失敗です"
     end
   end
 
@@ -68,6 +72,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.permit(:name)
+    params.permit(:name,:uuid)
   end
 end
