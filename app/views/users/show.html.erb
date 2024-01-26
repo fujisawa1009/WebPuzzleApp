@@ -6,8 +6,11 @@
     <span id="user_name_display"><%= @user.name %></span>
   </div>
 
-  <!-- uuidをhiddenで送信 -->
-  <%= form.hidden_field :uuid, value: params[:id] %>
+  <!-- 現在のユーザーのuuidを表示する -->
+  <div class="mb-3">
+    <%= form.label :uuid, "uuid" %>
+    <span id="uuid"><%= @user.uuid %></span>
+  </div>
 
   <!-- Secret keyword 入力フォーム -->
   <div class="mb-3">
