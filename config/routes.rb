@@ -7,7 +7,8 @@ Rails.application.routes.draw do
   # post 'users/authenticate', to: 'users#authenticate'
   # /users/:uuid/authenticate に対するルーティング
   post '/users/:id/authenticate', to: 'users#authenticate', as: 'user_authenticate'
-
+  # リダイレクト先のルート
+  get '/post/new', to: 'posts#new', as: 'new_post'
   resources :users, only: [:show]
 end
 

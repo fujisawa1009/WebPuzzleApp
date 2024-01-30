@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :check_authentication, only: [:create]
+  before_action :authenticate_user, only: [:show]
 
   def index
     # curl http://localhost:3000/users
@@ -44,11 +45,14 @@ class UsersController < ApplicationController
     # 2423feae-66cb-4dde-a090-8e8062123e38 で送れば惜しい
     # MjQyM2ZlYWUtNjZjYi00ZGRlLWEwOTAtOGU4MDYyMTIzZTM4 で送付すれば成功
     if @user && secret_keyword == base64_secret_keyword
-      puts "成功です"
+      flash[:alert] = t('成功です')
+      redirect_to new_post_path(user_uuid: @user.uuid)
     elsif @user && secret_keyword == user_uuid
-      puts "パスワードをBase64エンコードしてください"
+      flash[:alert] = t('パスワードをBase64エンコードしてください')
+      redirect_back(fallback_location: user_path(@user.uuid))
     else
-      puts "失敗です"
+      flash[:alert] = t('失敗です')
+      redirect_back(fallback_location: user_path(@user.uuid))
     end
   end
 
@@ -58,7 +62,7 @@ class UsersController < ApplicationController
     token = request.headers['Authorization']
     expected_token = Time.now.strftime('%Y-%m-%d')
 
-      if token.nil?
+    if token.nil?
       # curl -X POST http://localhost:3000/users
       render json: { message: "伝え忘れてました。一応簡易的な認証機能をつけてます。AuthorizationヘッダーにBearerトークンを設定してください。トークンは本日の日付です。フォーマットはyyyy-mm-ddです。" }, status: :unauthorized
       return
@@ -72,6 +76,16 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.permit(:name,:uuid)
+    params.permit(:name, :uuid)
+  end
+
+  def authenticate_user
+    # Basic認証のユーザー名とパスワードを設定
+    authenticate_or_request_with_http_basic do |username, password|
+      # ここで認証の条件を設定
+      # 例: ユーザー名が 'dhh' でパスワードが 'basecamp' の場合にのみ認証を通す
+      username == 'dhh' && password == 'basecamp'
+    end
   end
 end
+
