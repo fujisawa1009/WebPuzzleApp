@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   post '/users/:id/authenticate', to: 'users#authenticate', as: 'user_authenticate'
   # リダイレクト先のルート
   get '/post/new', to: 'posts#new', as: 'new_post'
+  post '/posts/new', to: 'posts#create', as: 'create_post'
   resources :users, only: [:show]
 end
 

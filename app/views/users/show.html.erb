@@ -1,3 +1,4 @@
+<!--フォームが送信される先のURLは'/users/:id/authenticate' -->
 <%= form_with(url: user_authenticate_path(params[:id]), method: 'post') do |form| %>
   <!-- フォームの中身を追加 -->
   <!-- 現在のユーザー名を表示する -->
