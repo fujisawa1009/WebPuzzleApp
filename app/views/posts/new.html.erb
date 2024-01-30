@@ -1,1 +1,9 @@
-リダイレクト成功テスト
+<%= form_with(model: @post, url: create_post_path, local: true) do |form| %>
+  <%= form.label :content, 'コメントを入力してください' %>
+  <%= form.text_area :content, placeholder: 'コメントを入力してください' %>
+
+  <%# CSRFトークンを埋め込む %>
+  <%= form.hidden_field :onetime_password, value: form_authenticity_token %>
+
+  <%= form.submit '完走のコメントを書く' %>
+<% end %>
