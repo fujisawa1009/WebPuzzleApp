@@ -48,10 +48,10 @@ class UsersController < ApplicationController
       flash[:alert] = t('成功です')
       redirect_to new_post_path(user_uuid: @user.uuid)
     elsif @user && secret_keyword == user_uuid
-      flash[:alert] = t('パスワードをBase64エンコードしてください')
+      flash[:alert] = t('惜しい。その秘密のパスワードをBase64エンコードしてください。')
       redirect_back(fallback_location: user_path(@user.uuid))
     else
-      flash[:alert] = t('失敗です')
+      flash[:alert] = t('秘密のパスワードが違います。')
       redirect_back(fallback_location: user_path(@user.uuid))
     end
   end
