@@ -1,6 +1,7 @@
 <%= form_with(model: @post, url: create_post_path(params[:user_uuid]), local: true) do |form| %>
   <%= form.label :content, 'コメントを入力してください' %>
   <%= form.text_area :content, placeholder: 'コメントを入力してください' %>
+  <%= hidden_field_tag :onetime_password, cookies[:onetime_password] %>
   <%# CSRFトークンを埋め込む %>
   <%= form.submit '完走のコメントを書く' %>
 <% end %>
