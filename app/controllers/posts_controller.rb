@@ -1,5 +1,9 @@
 class PostsController < ApplicationController
 
+  def index
+    @users = User.includes(:posts).all
+  end
+
   def new
     @post = Post.new
     onetime_password = generate_onetime_password # このメソッドは適切に実装する必要があります
@@ -17,7 +21,7 @@ class PostsController < ApplicationController
       @post.save!
       redirect_to posts_path
     else
-      @post.onetime_password.nil?　|| @post.onetime_password != cookies[:onetime_password]
+      @post.onetime_password.nil? 　 || @post.onetime_password != cookies[:onetime_password]
       flash[:alert] = t('ワンタイムパスワードが必要です。ワンタイムパスワードはcookieに保存しておきました。nameはpost[onetime_password]としてこのフォームに埋め込んで送信してください。あえて入力フォームは用意していませんので開発者ツールで無理やり作ってください。')
       redirect_to new_post_path(user_uuid: @user.uuid)
     end

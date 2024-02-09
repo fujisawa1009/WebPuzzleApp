@@ -1,1 +1,33 @@
-test index
+<!DOCTYPE html>
+<html>
+<head>
+  <title>WebPuzzle完遂</title>
+</head>
+<body style="text-align: center;">
+<h1>おめでとうございます!WebPuzzle完遂です！</h1>
+<hr>
+<h2>学習項目のおさらい</h2>
+<ol style="text-align: left; display: inline-block; margin-left: auto; margin-right: auto;">
+  <li>HTTPメソッドとは</li>
+  <li>HTTPヘッダとは</li>
+  <li>Authorization Bearerヘッダーとは</li>
+  <li>ベーシック認証とは</li>
+  <li>UUIDとは</li>
+  <li>Base64とは</li>
+  <li>Cookieとは</li>
+</ol>
+<h2>WebPuzzle完遂した人一覧</h2>
+<% if @users.present? %>
+  <% @users.each do |user| %>
+    <div style="text-align: left; display: inline-block; margin-left: auto; margin-right: auto;">
+      <strong>名前: </strong><%= user.name %><br>
+      <strong>コメント: </strong><%= user.posts&.last&.content %><br>
+      <strong>完遂日時: </strong><%= user.posts&.last&.created_at&.strftime("%Y-%m-%d %H:%M:%S") %><br>
+    </div>
+    <hr style="width: 50%; margin-left: auto; margin-right: auto;">
+  <% end %>
+<% else %>
+  <p>No users found.</p>
+<% end %>
+</body>
+</html>
